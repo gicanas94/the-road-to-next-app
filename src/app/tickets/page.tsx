@@ -1,96 +1,51 @@
 // @packages
 import Link from "next/link";
-import clsx from "clsx";
 
 // @app
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { LucideCircleCheck, LucideFileText, LucidePencil } from "lucide-react";
+import { Heading } from "@/components/heading";
 import { initialTickets } from "@/data";
 import { ticketPath } from "@/paths";
 
-const CheckIcon = () => (
-  <svg
-    className="size-6"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.5}
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="m4.5 12.75 6 6 9-13.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const DocumentIcon = () => (
-  <svg
-    className="size-6"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.5}
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const PencilIcon = () => (
-  <svg
-    className="size-6"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.5}
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 const TICKET_ICONS = {
-  DONE: <CheckIcon />,
-  IN_PROGRESS: <DocumentIcon />,
-  OPEN: <PencilIcon />,
+  DONE: <LucideCircleCheck />,
+  IN_PROGRESS: <LucideFileText />,
+  OPEN: <LucidePencil />,
 };
 
-export default function TicketsPage() {
+function TicketsPage() {
   return (
     <div className="flex flex-1 flex-col gap-8">
-      <div>
-        <h2 className="text-3xl font-bold">Tickets</h2>
-        <p className="text-sm">All your tickets at one place</p>
-      </div>
-      <div className="animate-fade-from-top flex flex-1 flex-col items-center gap-4">
+      <Heading description="All your tickets at one place" title="Tickets" />
+      <div className="animate-fade-in-from-top flex flex-1 flex-col items-center gap-4">
         {initialTickets.map((ticket) => (
-          <div
-            className="w-full max-w-2xl rounded border border-slate-100 p-4"
-            key={ticket.id}
-          >
-            <div>{TICKET_ICONS[ticket.status]}</div>
-            <h3 className="truncate text-lg font-semibold">{ticket.title}</h3>
-            <p
-              className={clsx("truncate text-sm text-slate-500", {
-                "line-through": ticket.status === "DONE",
-              })}
-            >
-              {ticket.content}
-            </p>
-            <Link className="text-sm underline" href={ticketPath(ticket.id)}>
-              View
-            </Link>
-          </div>
+          <Card className="w-full max-w-2xl" key={ticket.id}>
+            <CardHeader>
+              <CardTitle className="flex gap-2">
+                <span>{TICKET_ICONS[ticket.status]}</span>
+                <span className="truncate">{ticket.title}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <span className="line-clamp-3">{ticket.content}</span>
+            </CardContent>
+            <CardFooter>
+              <Link className="text-sm underline" href={ticketPath(ticket.id)}>
+                View
+              </Link>
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>
   );
 }
+
+export default TicketsPage;

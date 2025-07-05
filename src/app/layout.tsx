@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 // @app
+import { buttonVariants } from "@/components/ui/button";
 import { homePath, ticketsPath } from "@/paths";
 
 // @own
@@ -28,31 +29,33 @@ interface RootLayoutProps {
   readonly children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="sticky top-0 w-full">
-          <nav className="flex items-center justify-between bg-gray-800 p-4 text-white">
-            <ul className="flex space-x-4">
-              <li>
-                <Link className="hover:underline" href={homePath()}>
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline" href={ticketsPath()}>
-                  Tickets
-                </Link>
-              </li>
-            </ul>
-            <div className="text-lg font-bold">The Road to Next app</div>
+        <header className="bg-background/95 sticky top-0 flex w-full items-center justify-between border-b p-4">
+          <span className="text-lg font-bold">The Road to Next app</span>
+          <nav className="flex gap-4">
+            <Link
+              className={buttonVariants({ variant: "ghost" })}
+              href={homePath()}
+            >
+              Home
+            </Link>
+            <Link
+              className={buttonVariants({ variant: "ghost" })}
+              href={ticketsPath()}
+            >
+              Tickets
+            </Link>
           </nav>
         </header>
-        {children}
+        <main className="p-8">{children}</main>
       </body>
     </html>
   );
 }
+
+export default RootLayout;

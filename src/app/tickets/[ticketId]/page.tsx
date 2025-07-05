@@ -7,7 +7,7 @@ interface TicketPageProps {
   }>;
 }
 
-export default async function TicketPage({ params }: TicketPageProps) {
+async function TicketPage({ params }: TicketPageProps) {
   const { ticketId } = await params;
   const ticket = initialTickets.find((t) => t.id === ticketId);
 
@@ -27,3 +27,5 @@ export default async function TicketPage({ params }: TicketPageProps) {
     </div>
   );
 }
+
+export default TicketPage;

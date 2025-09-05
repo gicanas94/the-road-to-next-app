@@ -1,11 +1,19 @@
-// @app
-import { initialTickets } from "@/data";
+// @packages
+import Link from "next/link";
 
-interface TicketPageProps {
+// @app
+import { Button } from "@/components/ui/button";
+import { Placeholder } from "@/components/placeholder";
+import { TicketItem } from "@/features/ticket/components/ticket-item";
+import { initialTickets } from "@/data";
+import { ticketsPath } from "@/paths";
+
+// @types
+type TicketPageProps = {
   params: Promise<{
     ticketId: string;
   }>;
-}
+};
 
 async function TicketPage({ params }: TicketPageProps) {
   const { ticketId } = await params;
@@ -13,17 +21,20 @@ async function TicketPage({ params }: TicketPageProps) {
 
   if (!ticket) {
     return (
-      <div>
-        <p>Ticket not found</p>
-      </div>
+      <Placeholder
+        button={
+          <Button asChild variant="outline">
+            <Link href={ticketsPath()}>Go back</Link>
+          </Button>
+        }
+        label="Ticket not found"
+      />
     );
   }
 
   return (
-    <div>
-      <h2>{ticket.title}</h2>
-      <p>{ticket.content}</p>
-      <p>Status: {ticket.status}</p>
+    <div className="animate-fade-in-from-top flex justify-center">
+      <TicketItem isDetail ticket={ticket} />
     </div>
   );
 }

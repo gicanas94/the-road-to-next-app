@@ -2,10 +2,10 @@
 import { Separator } from "@/components/ui/separator";
 
 // @types
-interface HeadingProps {
+type HeadingProps = {
   description?: string;
   title: string;
-}
+};
 
 function Heading({ description, title }: HeadingProps) {
   return (

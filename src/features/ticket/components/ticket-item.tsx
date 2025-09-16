@@ -3,14 +3,12 @@ import Link from "next/link";
 import { LucideSquareArrowOutUpRight } from "lucide-react";
 
 // @app
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TICKET_ICONS } from "@/features/ticket/constants";
+import { Ticket } from "@/features/ticket/types";
 import { cn } from "@/lib/utils";
 import { ticketPath } from "@/paths";
-
-// @own
-import { TICKET_ICONS } from "../constants";
-import { Ticket } from "../types";
-import { Button } from "@/components/ui/button";
 
 // @types
 type TicketItemProps = {
